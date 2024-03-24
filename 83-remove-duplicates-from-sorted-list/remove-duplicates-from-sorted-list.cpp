@@ -21,8 +21,7 @@ public:
             }
             cr->next=head->next;
             if(head->next)head=head->next;
-        }
-       
+        }       
         return start->next;
     }
 };
