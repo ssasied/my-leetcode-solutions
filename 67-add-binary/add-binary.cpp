@@ -1,6 +1,7 @@
 class Solution {
 public:
     string addBinary(string a, string b) {
+        //popatrzyem na rozwiazanie i doznalem olsnienia
         string result="";
         int carry=0;
         int ita=a.size()-1;
