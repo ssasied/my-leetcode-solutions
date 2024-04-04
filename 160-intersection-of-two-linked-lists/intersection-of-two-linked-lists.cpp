@@ -45,16 +45,14 @@ public:
     }*/
     //smart solution with map (didnt think of that)
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        unordered_map<ListNode*,int>map;
-        while(headA){
-            map[headA]++;
-            headA=headA->next;
-        }
-        while(headB){
-            if(map[headB]==1)return headB;
-            headB=headB->next;
-        }
-        return nullptr;
-    
+       unordered_map<ListNode*,int>mpp;
+    for (auto p = headA ; p!=NULL ; p = p->next){
+        mpp[p]=p->val;
     }
+    for (auto p = headB ; p!=NULL ; p = p->next){
+        if (mpp.find(p)!=mpp.end()) return p;
+    }
+    return NULL;
+    }
+    
 };
