@@ -8,6 +8,9 @@
  */
 class Solution {
 public:
+/*
+    my solution with list 60%:
+
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         ListNode*ca=headA;
         ListNode*cb=headB;
@@ -39,5 +42,19 @@ public:
             smaller=smaller->next;
         }
         return higher;
+    }*/
+    //smart solution with map (didnt think of that)
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        unordered_map<ListNode*,int>map;
+        while(headA){
+            map[headA]++;
+            headA=headA->next;
+        }
+        while(headB){
+            if(map[headB]==1)return headB;
+            headB=headB->next;
+        }
+        return nullptr;
+    
     }
 };
