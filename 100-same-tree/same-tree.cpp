@@ -12,6 +12,7 @@
 class Solution {
 public:  
     bool isSameTree(TreeNode* p, TreeNode* q) {
+        //mondre to, nie moje ale zrobilem podobnie tylko brzydziej i wolniej
         if (!p) return q==nullptr;
         if (!q) return p==nullptr;
         if (p->val==q->val)
