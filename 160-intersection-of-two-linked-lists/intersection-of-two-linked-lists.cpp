@@ -60,7 +60,7 @@ public:
         return higher;
     }*/
     //smart solution with map (didnt think of that)
-    
+    /*
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         unordered_map<ListNode*,int>map;
         while(headA){
@@ -75,7 +75,40 @@ public:
             headB=headB->next;
         }
         return nullptr;
-    
+
+    }*/
+     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode*ca=headA;
+        ListNode*cb=headB;
+        int cta=1;
+        int ctb=1;
+        while(ca->next){
+            ca=ca->next;
+            cta++;
+        }
+        while(cb->next){
+            cb=cb->next;
+            ctb++;
+        }
+        
+        int counter=ctb>cta?ctb-cta:cta-ctb;   
+             
+        ListNode*higher=ctb>=cta?headB:headA;
+        ListNode*smaller=ctb<=cta?headB:headA;        
+        if(counter==0){
+            higher=headB;
+            smaller=headA;
+        }
+        while(counter){
+            counter--;
+            higher=higher->next;            
+        }
+        while(higher!=smaller){
+            higher=higher->next;
+            smaller=smaller->next;
+        }
+        return higher;
     }
     ///this solution is slower without the shananigans at the top (30% compared to 60 with normal solution)
+    // i think that is cheating tho??
 };
