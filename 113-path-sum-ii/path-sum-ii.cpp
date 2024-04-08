@@ -11,19 +11,21 @@
  */
 class Solution {
 public:
-    vector<vector<int>> gotree(TreeNode *q,int num,const int &targetsum,vector<int>current,vector<vector<int>>&result){
-        int newnum=num+q->val;
+    void gotree(TreeNode *q,const int &targetSum,vector<int>&current,vector<vector<int>>&result){
+        if(!q)return;
         current.push_back(q->val);
-        if(!q->right&&!q->left){
-            if(newnum==targetsum)result.push_back(current);
+         if (!q->left && !q->right  && q->val == targetSum) {
+            result.push_back(current);
         }
-        if(q->left)gotree(q->left,newnum,targetsum,current,result);
-        if(q->right)gotree(q->right,newnum,targetsum,current,result);
-        return result;
+        gotree(q->left, targetSum - q->val, current, result);
+        gotree(q->right, targetSum - q->val, current, result);
+        current.pop_back();
     }
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
         if(!root)return {};
         vector<vector<int>>result;
-        return gotree(root,0,targetSum,{},result);
+        vector<int>current;
+        gotree(root,targetSum,current,result);
+        return result;
     }
 };
