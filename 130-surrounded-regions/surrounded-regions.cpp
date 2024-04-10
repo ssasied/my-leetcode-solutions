@@ -20,7 +20,7 @@ public:
                 vector<pair<int,int>>queue;
                 bool nc=false;
                 set<pair<int,int>>visited;
-                cout<<"go"<<'\n';
+                //cout<<"go"<<'\n';
                 if(board[i][j]=='O'&&visited2[i][j]==false)
                 if(!checkn(i,j,board,nc,0,visited2,queue))
                         for(auto i:queue){
