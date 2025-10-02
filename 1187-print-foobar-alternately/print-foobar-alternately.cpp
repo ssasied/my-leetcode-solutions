@@ -1,36 +1,39 @@
 class FooBar {
 private:
     int n;
+    int count;
+
+    std::mutex mtx;
+    std::condition_variable cv;
 
 public:
-
-    condition_variable cv1, cv2;
-    
-     mutex m;
-     bool fooTurn = true;
-    FooBar(int n) {
+    FooBar(int n) : count(0) {
         this->n = n;
     }
-    void foo(function<void()> printFoo) {        
-        for (int i = 0; i < n; i++) {            
+
+    void foo(function<void()> printFoo) {
+        
+        for (int i = 0; i < n; i++) {
+            std::unique_lock<std::mutex> lock(mtx);
+            cv.wait(lock, [&]() { return count % 2 == 0; });
         	// printFoo() outputs "foo". Do not change or remove this line.
-            unique_lock<mutex> lock(m);
-            cv1.wait(lock, [&]{ return fooTurn; });
         	printFoo();
-            fooTurn=false;
-            cv2.notify_one();
+            count++;
+            cv.notify_one();
+            lock.unlock();
         }
     }
 
     void bar(function<void()> printBar) {
         
         for (int i = 0; i < n; i++) {
-            unique_lock<mutex> lock(m);
-            cv2.wait(lock, [&]{ return !fooTurn; });
+            std::unique_lock<std::mutex> lock(mtx);
+            cv.wait(lock, [&]() { return count % 2 != 0; });
         	// printBar() outputs "bar". Do not change or remove this line.
         	printBar();
-            fooTurn=true;           
-            cv1.notify_one();
+            count++;
+            cv.notify_one();
+            lock.unlock();
         }
     }
 };
